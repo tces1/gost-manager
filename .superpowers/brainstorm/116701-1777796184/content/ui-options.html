@@ -1,0 +1,59 @@
+<div class="p-6 space-y-8">
+  <h1 class="text-2xl font-bold mb-4">选择您的 GOST 面板 UI 风格</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Option 1: Minimal -->
+    <div class="border rounded-lg p-4 hover:border-blue-500 cursor-pointer transition-colors" data-select="minimal">
+      <h2 class="text-xl font-semibold mb-2">1. 极简 Web 界面</h2>
+      <p class="text-sm text-gray-500 mb-4">简单列表，专注于核心功能。</p>
+      <div class="bg-gray-100 p-2 rounded text-xs font-mono space-y-1">
+        <div class="flex justify-between border-b pb-1"><span>端口转发</span> <span class="bg-blue-500 text-white px-1 rounded">添加</span></div>
+        <div>8080 -> 192.168.1.1:80</div>
+        <div>9090 -> 192.168.1.2:90</div>
+        <div class="mt-2 text-center text-blue-500">一键刷新配置</div>
+      </div>
+    </div>
+
+    <!-- Option 2: Dashboard -->
+    <div class="border rounded-lg p-4 hover:border-blue-500 cursor-pointer transition-colors" data-select="dashboard">
+      <h2 class="text-xl font-semibold mb-2">2. 仪表盘风格</h2>
+      <p class="text-sm text-gray-500 mb-4">状态监控、流量统计，一目了然。</p>
+      <div class="bg-gray-100 p-2 rounded text-xs space-y-2">
+        <div class="flex justify-between font-bold"><span>状态</span> <span>转发对</span> <span>流量</span></div>
+        <div class="flex justify-between items-center">
+          <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+          <span>8080:80</span>
+          <span>1.2GB</span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+          <span>9090:90</span>
+          <span>0B</span>
+        </div>
+        <div class="h-8 bg-blue-100 rounded flex items-end px-1 space-x-1">
+          <div class="bg-blue-500 w-full h-1/2"></div>
+          <div class="bg-blue-500 w-full h-3/4"></div>
+          <div class="bg-blue-500 w-full h-2/3"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 3: Config Editor -->
+    <div class="border rounded-lg p-4 hover:border-blue-500 cursor-pointer transition-colors" data-select="config">
+      <h2 class="text-xl font-semibold mb-2">3. 配置文件编辑</h2>
+      <p class="text-sm text-gray-500 mb-4">直接编辑配置，灵活可控。</p>
+      <div class="bg-gray-800 text-green-400 p-2 rounded text-xs font-mono h-24 overflow-hidden">
+        <div>{</div>
+        <div class="ml-2">"services": [</div>
+        <div class="ml-4">{ "addr": ":8080", ... }</div>
+        <div class="ml-2">]</div>
+        <div>}</div>
+        <div class="mt-2 border-t border-gray-600 pt-1 text-center">保存并重启</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 text-sm">
+    请在浏览器中点击您喜欢的方案，或者在终端告诉我也行。
+  </div>
+</div>

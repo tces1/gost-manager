@@ -1,0 +1,48 @@
+<div class="p-6 space-y-6">
+  <h1 class="text-2xl font-bold">方案 1: 平滑重载 (Hot Reload) 流程</h1>
+  
+  <div class="flex flex-col items-center space-y-4">
+    <!-- Panel -->
+    <div class="w-64 p-4 bg-blue-500 text-white rounded-lg shadow text-center">
+      <div class="font-bold">Web 面板 (Frontend/Backend)</div>
+      <div class="text-xs opacity-80">用户操作: 添加/删除转发</div>
+    </div>
+    
+    <div class="text-blue-500">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+    </div>
+
+    <!-- Config File -->
+    <div class="w-64 p-4 bg-green-100 border-2 border-green-500 text-green-800 rounded-lg text-center relative">
+      <div class="font-bold">gost.json / gost.yaml</div>
+      <div class="text-xs">写入最新配置</div>
+      <!-- Hot Reload Signal -->
+      <div class="absolute -right-16 top-1/2 -translate-y-1/2 flex items-center">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+        </span>
+        <span class="ml-2 text-xs font-bold text-green-600">检测到变化</span>
+      </div>
+    </div>
+
+    <div class="text-green-500">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+    </div>
+
+    <!-- GOST Process -->
+    <div class="w-64 p-4 bg-gray-800 text-white rounded-lg shadow text-center">
+      <div class="font-bold">GOST 进程</div>
+      <div class="text-xs opacity-80">自动重载配置，连接不中断</div>
+    </div>
+  </div>
+
+  <div class="mt-8 bg-gray-50 p-4 rounded border">
+    <h2 class="font-bold mb-2">技术优势：</h2>
+    <ul class="list-disc ml-5 text-sm space-y-1">
+      <li><strong>稳定性：</strong> 修改配置时，正在运行的代理连接不会断开。</li>
+      <li><strong>响应快：</strong> 保存即生效。</li>
+      <li><strong>简单：</strong> 无需复杂的进程管理逻辑。</li>
+    </ul>
+  </div>
+</div>
