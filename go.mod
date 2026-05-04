@@ -1,4 +1,4 @@
-module gost-panel
+module gost-manager
 
 go 1.25.0
 

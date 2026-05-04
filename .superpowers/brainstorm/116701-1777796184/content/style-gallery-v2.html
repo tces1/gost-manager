@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Merriweather:ital@0;1&display=swap" rel="stylesheet">
+  <title>GOST Panel Style Gallery</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .serif { font-family: 'Merriweather', serif; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-slate-400 p-8">
+  <div class="max-w-7xl mx-auto">
+    <header class="text-center mb-16">
+      <h1 class="text-5xl font-extrabold text-white tracking-tight mb-4 italic italic">风格实验室 / Style Lab</h1>
+      <p class="text-slate-500 max-w-2xl mx-auto text-lg">为您精心打磨的 6 款核心视觉方案，点击即可预览未来。</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      
+      <!-- 1. Modern Dark SaaS -->
+      <div class="group border border-white/10 bg-[#121212] rounded-[2rem] overflow-hidden hover:border-indigo-500/50 transition-all cursor-pointer shadow-2xl scale-100 hover:scale-[1.02]">
+        <div class="h-48 bg-gradient-to-b from-indigo-500/10 to-transparent flex items-center justify-center border-b border-white/5">
+          <div class="w-20 h-20 bg-indigo-600 rounded-2xl shadow-2xl shadow-indigo-500/40 flex items-center justify-center text-white text-4xl font-bold italic">S</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-white font-bold text-xl mb-3">01. 现代深色专业风</h3>
+          <p class="text-sm leading-relaxed opacity-60">类似 Linear/Vercel。极致冷静，灰阶层次丰富。这是目前公认最“不廉价”的管理后台风格。</p>
+        </div>
+      </div>
+
+      <!-- 2. Glassmorphism -->
+      <div class="group border border-white/10 bg-white/5 backdrop-blur-xl rounded-[2rem] overflow-hidden hover:border-pink-500/50 transition-all cursor-pointer shadow-2xl scale-100 hover:scale-[1.02]">
+        <div class="h-48 flex items-center justify-center border-b border-white/10 relative">
+          <div class="absolute inset-0 bg-gradient-to-tr from-pink-500/20 via-transparent to-violet-500/20"></div>
+          <div class="w-24 h-24 bg-white/10 border border-white/30 rounded-full backdrop-blur-2xl shadow-2xl flex items-center justify-center text-white text-4xl font-light">○</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-white font-bold text-xl mb-3">02. 苹果味毛玻璃</h3>
+          <p class="text-sm leading-relaxed opacity-60">灵动、通透。利用 iOS 风格的高斯模糊。非常适合追求时尚感和轻盈感的用户。</p>
+        </div>
+      </div>
+
+      <!-- 3. Claude Minimalist -->
+      <div class="group border border-[#e5e5e0] bg-[#F9F9F8] rounded-[2rem] overflow-hidden hover:border-[#d97757] transition-all cursor-pointer shadow-xl scale-100 hover:scale-[1.02]">
+        <div class="h-48 bg-[#F3F3F2] flex items-center justify-center border-b border-[#e5e5e0]">
+          <div class="px-6 py-3 bg-white border border-[#e5e5e0] rounded-2xl text-[#1d1d1b] serif italic text-2xl shadow-sm">Claude Style</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-[#1d1d1b] font-bold text-xl mb-3">03. Claude 极简人文风</h3>
+          <p class="text-sm leading-relaxed text-slate-500">优雅、考究。大量留白与极致的衬线体排版。这不仅仅是一个面板，更像是一本精致的电子刊物。</p>
+        </div>
+      </div>
+
+      <!-- 4. Mystical -->
+      <div class="group border border-violet-500/30 bg-[#030712] rounded-[2rem] overflow-hidden hover:border-violet-500 transition-all cursor-pointer shadow-2xl relative scale-100 hover:scale-[1.02]">
+        <div class="h-48 flex items-center justify-center border-b border-white/5 relative">
+          <div class="absolute w-48 h-48 bg-violet-600/30 blur-[80px] rounded-full"></div>
+          <div class="relative w-16 h-16 bg-gradient-to-tr from-violet-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-2xl shadow-violet-500/40 text-white italic text-3xl serif">M</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-white font-bold text-xl mb-3">04. 神秘主义幻境</h3>
+          <p class="text-sm leading-relaxed text-violet-300/50">深邃、魔法。将枯燥的端口转发仪式化。适合喜欢沉浸式、带有叙事感视觉的用户。</p>
+        </div>
+      </div>
+
+      <!-- 5. Cyberpunk Retro -->
+      <div class="group border border-cyan-500/30 bg-black rounded-[2rem] overflow-hidden hover:border-pink-500 transition-all cursor-pointer shadow-2xl scale-100 hover:scale-[1.02]">
+        <div class="h-48 bg-slate-900 flex items-center justify-center border-b border-cyan-500/20 relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(#0ff 1px, transparent 1px), linear-gradient(90deg, #0ff 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <div class="px-8 py-2 border-2 border-pink-500 skew-x-[-15deg] flex items-center justify-center text-pink-500 font-black italic tracking-[0.3em] text-2xl">CYBER_CORE</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-cyan-400 font-bold text-xl mb-3">05. 赛博朋克 2077</h3>
+          <p class="text-sm leading-relaxed text-cyan-900">硬核、霓虹。极致的高对比度，极具视觉侵略性。这就是您在电影里看到的黑客界面。</p>
+        </div>
+      </div>
+
+      <!-- 6. Brutalist -->
+      <div class="group border-[6px] border-black bg-white rounded-[2rem] overflow-hidden hover:bg-yellow-400 transition-all cursor-pointer shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] scale-100 hover:scale-[1.02]">
+        <div class="h-48 flex items-center justify-center border-b-[6px] border-black">
+          <div class="px-6 py-4 border-[6px] border-black bg-white flex items-center justify-center text-black font-black uppercase tracking-tighter text-3xl">RAW_DATA</div>
+        </div>
+        <div class="p-8">
+          <h3 class="text-black font-bold text-xl mb-3">06. 工业粗犷风</h3>
+          <p class="text-sm leading-relaxed text-black/60">直率、大胆。无视传统美学规则。适合想要一种“这工具很有力”这种感觉的用户。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="mt-20 text-center pb-20">
+      <div class="inline-block p-6 border border-white/10 rounded-[2rem] bg-white/5 backdrop-blur-md">
+        <p class="text-white text-lg font-medium">✨ 在浏览器中查看真实渲染效果，选好编号告诉我即可。</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

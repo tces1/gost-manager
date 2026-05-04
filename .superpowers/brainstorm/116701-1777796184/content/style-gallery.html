@@ -1,0 +1,88 @@
+<div class="min-h-screen bg-[#0a0a0a] text-slate-400 p-8 font-sans">
+  <div class="max-w-7xl mx-auto">
+    <header class="text-center mb-16">
+      <h1 class="text-4xl font-extrabold text-white tracking-tight mb-4 italic">Design Dimension Selector</h1>
+      <p class="text-slate-500 max-w-2xl mx-auto italic">Choose the aesthetic realm for your GOST Command Center. Each style is crafted for a unique user experience.</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- 1. Modern Dark SaaS -->
+      <div class="group border border-white/5 bg-[#121212] rounded-3xl overflow-hidden hover:border-indigo-500/50 transition-all cursor-pointer shadow-2xl" data-select="saas">
+        <div class="h-40 bg-indigo-900/20 flex items-center justify-center border-b border-white/5">
+          <div class="w-24 h-24 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-500/20 flex items-center justify-center text-white text-3xl font-bold italic">S</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold text-lg mb-2">方案 1: 现代深色专业风 (SaaS)</h3>
+          <p class="text-xs leading-relaxed opacity-70">类似 Linear 或 Vercel。极简、高效、冷静。适合长时间管理工作，不伤眼且极具专业感。</p>
+        </div>
+      </div>
+
+      <!-- 2. Glassmorphism -->
+      <div class="group border border-white/5 bg-gradient-to-br from-pink-500/10 to-violet-500/10 rounded-3xl overflow-hidden hover:border-pink-500/50 transition-all cursor-pointer shadow-2xl" data-select="glass">
+        <div class="h-40 backdrop-blur-xl bg-white/5 flex items-center justify-center border-b border-white/10 relative">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pink-500/20 via-transparent to-transparent"></div>
+          <div class="w-20 h-20 bg-white/10 border border-white/20 rounded-full backdrop-blur-md shadow-xl flex items-center justify-center text-white text-3xl font-light">○</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold text-lg mb-2">方案 2: 苹果味毛玻璃 (Apple)</h3>
+          <p class="text-xs leading-relaxed opacity-70">通透、时尚。利用高强度模糊和柔和渐变。极具现代感，适合作为展示型仪表盘。</p>
+        </div>
+      </div>
+
+      <!-- 3. Claude Minimalist -->
+      <div class="group border border-[#e5e5e0] bg-[#F9F9F8] rounded-3xl overflow-hidden hover:border-[#d97757] transition-all cursor-pointer shadow-xl" data-select="claude">
+        <div class="h-40 bg-[#F3F3F2] flex items-center justify-center border-b border-[#e5e5e0]">
+          <div class="w-24 h-12 bg-white border border-[#e5e5e0] rounded-xl flex items-center justify-center text-[#1d1d1b] font-serif italic text-xl shadow-sm">Claude</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-[#1d1d1b] font-bold text-lg mb-2">方案 3: Claude 极简人文风</h3>
+          <p class="text-xs leading-relaxed text-slate-600">克制、优雅。采用精致的衬线体与大量的留白。追求极致的阅读舒适度与高端质感。</p>
+        </div>
+      </div>
+
+      <!-- 4. Mystical (Current) -->
+      <div class="group border border-violet-500/20 bg-[#030712] rounded-3xl overflow-hidden hover:border-violet-500 transition-all cursor-pointer shadow-2xl relative" data-select="mystic">
+        <div class="absolute top-2 right-2 px-2 py-1 bg-violet-600 text-white text-[8px] font-bold rounded uppercase">Active</div>
+        <div class="h-40 flex items-center justify-center border-b border-white/5 relative overflow-hidden">
+          <div class="absolute w-40 h-40 bg-violet-600/20 blur-3xl rounded-full"></div>
+          <div class="relative w-16 h-16 bg-gradient-to-tr from-violet-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-violet-500/20 text-white italic text-2xl font-serif">M</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold text-lg mb-2">方案 4: 神秘主义幻境 (Current)</h3>
+          <p class="text-xs leading-relaxed text-violet-300/60">深邃、梦幻。暗调色彩搭配发光动效。打破常规，将代理转发比作一场“时空仪式”。</p>
+        </div>
+      </div>
+
+      <!-- 5. Cyberpunk Retro -->
+      <div class="group border border-cyan-500/30 bg-black rounded-3xl overflow-hidden hover:border-pink-500 transition-all cursor-pointer shadow-2xl shadow-cyan-500/10" data-select="cyberpunk">
+        <div class="h-40 bg-slate-900 flex items-center justify-center border-b border-cyan-500/20 relative overflow-hidden">
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(#0ff 1px, transparent 1px), linear-gradient(90deg, #0ff 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <div class="w-32 h-10 border-2 border-pink-500 skew-x-[-20deg] flex items-center justify-center text-pink-500 font-black italic tracking-widest text-xl">CYBER_</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-cyan-400 font-bold text-lg mb-2">方案 5: 赛博朋克 2077</h3>
+          <p class="text-xs leading-relaxed text-cyan-700">高对比度、霓虹配色。硬核、复古未来感。适合想要极致“黑客”视觉冲击的用户。</p>
+        </div>
+      </div>
+
+      <!-- 6. Brutalist Industrial -->
+      <div class="group border-4 border-black bg-white rounded-3xl overflow-hidden hover:bg-yellow-400 transition-all cursor-pointer shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]" data-select="brutalist">
+        <div class="h-40 flex items-center justify-center border-b-4 border-black">
+          <div class="w-32 h-16 border-4 border-black bg-white flex items-center justify-center text-black font-black uppercase tracking-tighter text-2xl">Raw_Tool</div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-black font-bold text-lg mb-2">方案 6: 工业粗犷风 (Brutalist)</h3>
+          <p class="text-xs leading-relaxed text-black/70">极黑线条、鲜艳大色块。反设计、实用主义。大胆、直率，具有极强的视觉张力。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="mt-20 text-center pb-12">
+      <div class="inline-block p-4 glass-card rounded-2xl bg-white/5 border border-white/10">
+        <p class="text-sm text-slate-400 italic">请在浏览器中查看效果，然后告诉我您心仪的方案编号。</p>
+      </div>
+    </footer>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="min-h-screen bg-[#F9F9F8] text-[#1d1d1b] font-sans p-4 md:p-8 flex items-center justify-center">
+  <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 bg-white border border-[#e5e5e0] rounded-xl shadow-sm overflow-hidden">
+    
+    <!-- Sidebar -->
+    <div class="bg-[#F3F3F2] p-6 border-r border-[#e5e5e0] space-y-8">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-[#d97757] rounded-lg flex items-center justify-center text-white font-serif italic text-xl">G</div>
+        <span class="font-semibold text-lg tracking-tight">Gost Panel</span>
+      </div>
+      
+      <nav class="space-y-1">
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 bg-white border border-[#e5e5e0] rounded-lg text-sm font-medium shadow-sm">
+           <svg class="w-4 h-4 text-[#d97757]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+           <span>Dashboard</span>
+        </a>
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 text-slate-600 hover:bg-white/50 rounded-lg text-sm transition-colors">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+           <span>Forwarding</span>
+        </a>
+        <a href="#" class="flex items-center space-x-3 px-3 py-2 text-slate-600 hover:bg-white/50 rounded-lg text-sm transition-colors">
+           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+           <span>System Logs</span>
+        </a>
+      </nav>
+      
+      <div class="pt-24 px-3 text-[10px] text-slate-400 uppercase tracking-widest font-semibold">
+        Version 3.0.0 Stable
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="p-8 space-y-8">
+      <div class="flex justify-between items-end">
+        <div>
+          <h2 class="text-3xl font-serif text-[#1d1d1b]">Active Services</h2>
+          <p class="text-sm text-slate-500 mt-1">Manage and monitor your port forwarding rules.</p>
+        </div>
+        <button class="bg-[#1d1d1b] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-black transition-all shadow-md">
+          + New Rule
+        </button>
+      </div>
+
+      <div class="border border-[#e5e5e0] rounded-xl overflow-hidden bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-[#F3F3F2] border-b border-[#e5e5e0] text-slate-500 font-medium">
+            <tr>
+              <th class="px-6 py-3">Service Name</th>
+              <th class="px-6 py-3">Protocol</th>
+              <th class="px-6 py-3">Mapping</th>
+              <th class="px-6 py-3 text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#e5e5e0]">
+            <tr>
+              <td class="px-6 py-4 font-medium text-[#1d1d1b]">Web API Proxy</td>
+              <td class="px-6 py-4 text-xs font-mono">TCP</td>
+              <td class="px-6 py-4 text-slate-600 font-mono">8080 → 127.0.0.1:3000</td>
+              <td class="px-6 py-4 text-right">
+                <span class="inline-flex items-center px-2 py-1 rounded-full bg-green-50 text-green-700 text-[10px] font-bold border border-green-100">RUNNING</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="px-6 py-4 font-medium text-[#1d1d1b]">Secure Tunnel</td>
+              <td class="px-6 py-4 text-xs font-mono">TCP</td>
+              <td class="px-6 py-4 text-slate-600 font-mono">443 → 192.168.1.100:443</td>
+              <td class="px-6 py-4 text-right">
+                <span class="inline-flex items-center px-2 py-1 rounded-full bg-slate-50 text-slate-500 text-[10px] font-bold border border-slate-100">IDLE</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Mini Terminal -->
+      <div class="bg-[#F3F3F2] rounded-xl border border-[#e5e5e0] p-4 font-mono text-xs text-slate-600 space-y-1">
+        <div class="flex items-center space-x-2 text-slate-400 mb-2">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span class="uppercase tracking-tighter">System_Stream</span>
+        </div>
+        <div>[14:20:12] Generating configuration file...</div>
+        <div>[14:20:13] <span class="text-green-600">Success:</span> gost-engine reloaded (SIGHUP)</div>
+        <div class="animate-pulse">_</div>
+      </div>
+
+    </div>
+  </div>
+</div>
