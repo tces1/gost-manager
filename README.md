@@ -7,37 +7,37 @@
 
 **GOST Manager** is a modern, high-end web control panel designed for the [GOST](https://github.com/go-gost/gost) proxy engine. It provides an intuitive interface to manage port forwarding rules with real-time feedback and a professional aesthetic.
 
-[ 中文说明 | [English](#english) ]
+[English | [中文说明](#中文说明)]
 
 ![GOST Manager dashboard](docs/assets/gost-manager-dashboard.png)
 
-Docker 镜像计划支持：
+Supported Docker image platforms:
 - `linux/amd64`
 - `linux/arm64`
-- `linux/arm/v7`（适合常见 ARM 路由器和边缘设备）
+- `linux/arm/v7` for common ARM routers and edge devices
 
 ---
 
-## 🌟 核心特性 (Features)
+## Features
 
-- **🎨 极简美学设计 (Elegant UI)**：深度参考 Claude 视觉风格，结合现代毛玻璃质感，提供极致的视觉体验。
-- **⚡ 自动化同步 (Auto-Sync)**：添加或删除转发规则后，系统会自动生成配置并平滑重载 GOST 引擎，无需手动点击。
-- **📊 实时状态监控 (Real-time Metrics)**：
-  - **CPU Usage**：1秒级高频轮询，精准掌握系统负载。
-  - **Live Logs**：基于 WebSocket 的实时日志流，秒级反馈运行状态。
-- **🛡️ 安全防护 (Security)**：
-  - 强密码登录验证。
-  - 支持在设置页面动态修改管理密码。
-- **📱 全平台适配 (Responsive)**：完美适配手机、平板及 PC 端。
-- **🐳 一键部署 (One-click Deploy)**：提供 All-in-One Docker 镜像，内置 GOST 核心。
+- **Elegant UI**: A polished dashboard with a modern glassmorphism style and a clean operations-focused layout.
+- **Auto Sync**: Adding or deleting a rule regenerates config and reloads the GOST engine automatically.
+- **Real-time Metrics**:
+  - **CPU Usage**: High-frequency polling for quick system feedback.
+  - **Live Logs**: WebSocket-based live log streaming in the UI.
+- **Security**:
+  - Password-protected login.
+  - In-app admin password updates.
+- **Responsive**: Usable on desktop, tablet, and mobile.
+- **One-Container Deployment**: Docker image includes the GOST engine and the web panel.
 
 ---
 
-## 🚀 快速开始 (Quick Start)
+## Quick Start
 
-### 使用 Docker 部署 (推荐)
+### Docker Deployment
 
-这是最简单的运行方式，只需一行命令：
+Run the container with:
 
 ```bash
 docker run -d \
@@ -48,52 +48,52 @@ docker run -d \
   --restart always \
   tces1/gost-manager
 ```
-*注：8080 为面板访问端口，8000-8100 为转发预留端口。*
+`8080` is the panel port. `8000-8100` is the reserved forwarding port range.
 
-### 本地构建 (Manual Build)
+### Local Build
 
-如果你想在当前机器上直接运行，项目现在提供了跨平台本地构建脚本，会自动：
+For local development on the current machine, the project provides a cross-platform build script that will:
 
-- 编译当前架构的 `gost-manager`
-- 下载当前系统对应的 `gost-engine`
-- 构建前端静态资源
+- build `gost-manager` for the current architecture
+- download the matching `gost-engine` binary for the current OS and architecture
+- build the frontend assets
 
 ```bash
 ./scripts/build-local.sh
 ./gost-manager
 ```
 
-访问 `http://localhost:8081`，初始密码为 `admin`。
+Open `http://localhost:8081`. The default password is `admin`.
 
-如果你想手动拆开执行：
+If you prefer to run the steps manually:
 
-1. **构建前端**：
+1. **Build the frontend**:
    ```bash
    cd frontend
    npm ci
    npm run build
    ```
 
-2. **构建后端**：
+2. **Build the backend**:
    ```bash
    cd ..
    go build -o gost-manager main.go
    ```
 
-3. **下载当前平台的 GOST 引擎**：
+3. **Download the matching GOST engine**:
    ```bash
    ./scripts/install-gost-engine.sh
    ```
 
-4. **启动**：
+4. **Start the panel**:
    ```bash
    ./gost-manager
    ```
-   访问 `http://localhost:8081`，初始密码为 `admin`。
+   Open `http://localhost:8081`. The default password is `admin`.
 
 ---
 
-## 🛠️ 技术栈 (Tech Stack)
+## Tech Stack
 
 - **Backend**: Go (Gin Framework)
 - **Frontend**: React 19 + TypeScript + Vite
@@ -103,47 +103,45 @@ docker run -d \
 
 ---
 
-## 📂 项目结构 (Structure)
+## Structure
 
 ```text
 .
-├── main.go            # 后端入口及 API 逻辑
-├── config/            # 数据存储与持久化层
-├── gost/              # GOST 引擎管理与配置生成
-├── ws/                # WebSocket 通讯中心
-├── frontend/          # React 前端源代码
-├── Dockerfile         # 多阶段构建文件
-└── entrypoint.sh      # 容器启动脚本
+├── main.go            # Backend entrypoint and API routes
+├── config/            # Persistence and storage
+├── gost/              # GOST process management and config generation
+├── ws/                # WebSocket hub
+├── frontend/          # React frontend source
+├── Dockerfile         # Multi-stage image build
+└── entrypoint.sh      # Container startup script
 ```
 
 ---
 
-## 🤝 贡献与反馈 (Contribution)
+## Contribution
 
-欢迎提交 Issue 或 Pull Request 来改进项目！
+Issues and pull requests are welcome.
 
-1. Fork 本项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交改动 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 提交 Pull Request
-
----
-
-## 📄 开源协议 (License)
-
-本项目采用 [MIT License](LICENSE) 开源。
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
 
 ---
 
-<a name="english"></a>
-## English Summary
+## License
 
-**GOST Manager** is a sophisticated dashboard for GOST proxy, featuring:
-- **Professional Design**: Inspired by Claude's aesthetic with glassmorphism effects.
-- **Instant Propagation**: Rules apply immediately via automated configuration reloading.
-- **System Awareness**: High-frequency CPU monitoring and real-time WebSocket console logs.
-- **Secure**: Robust login protection with in-app password management.
-- **Docker-Ready**: Multi-stage Docker build for lightweight, all-in-one deployment.
+This project is released under the [MIT License](LICENSE).
 
-**Access**: Default port is `8081`, default key is `admin`.
+---
+
+<a name="中文说明"></a>
+## 中文说明
+
+**GOST Manager** 是一个面向 [GOST](https://github.com/go-gost/gost) 的现代化 Web 控制面板，支持通过图形界面管理端口转发规则，并提供实时日志、系统状态和自动同步能力。
+
+- 支持 `linux/amd64`、`linux/arm64`、`linux/arm/v7` Docker 镜像
+- 支持本机构建脚本，自动下载匹配平台的 `gost-engine`
+- 默认访问地址：`http://localhost:8081`
+- 默认密码：`admin`
