@@ -11,6 +11,11 @@
 
 ![GOST Manager dashboard](docs/assets/gost-manager-dashboard.png)
 
+Docker 镜像计划支持：
+- `linux/amd64`
+- `linux/arm64`
+- `linux/arm/v7`（适合常见 ARM 路由器和边缘设备）
+
 ---
 
 ## 🌟 核心特性 (Features)

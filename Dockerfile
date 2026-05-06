@@ -13,8 +13,11 @@ FROM --platform=$BUILDPLATFORM golang:1.25-alpine AS backend-builder
 WORKDIR /app
 ARG TARGETOS
 ARG TARGETARCH
+ARG TARGETVARIANT
 COPY . .
-RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o gost-manager main.go
+RUN GOARM_VALUE="" && \
+    if [ "${TARGETARCH:-}" = "arm" ] && [ -n "${TARGETVARIANT:-}" ]; then GOARM_VALUE="${TARGETVARIANT#v}"; fi && \
+    CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} GOARM=$GOARM_VALUE go build -o gost-manager main.go
 
 # --- Stage 3: Final Image ---
 FROM alpine:latest
