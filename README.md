@@ -9,6 +9,8 @@
 
 [ 中文说明 | [English](#english) ]
 
+![GOST Manager dashboard](docs/assets/gost-manager-dashboard.png)
+
 ---
 
 ## 🌟 核心特性 (Features)
