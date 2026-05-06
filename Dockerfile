@@ -7,7 +7,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # --- Stage 2: Build Backend ---
-FROM golang:1.21-alpine AS backend-builder
+FROM golang:1.25-alpine AS backend-builder
 WORKDIR /app
 COPY . .
 RUN go build -o gost-manager main.go
@@ -37,7 +37,7 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 COPY entrypoint.sh ./
 
 # Expose the panel port
-EXPOSE 8080
+EXPOSE 8081
 
 # Expose a range of ports for forwarding (optional, can be expanded via docker run)
 EXPOSE 8000-8100

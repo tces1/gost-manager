@@ -39,7 +39,7 @@ docker run -d \
   -p 8000-8100:8000-8100 \
   -v ./data:/app/config \
   --restart always \
-  your-docker-registry/gost-manager
+  tces1/gost-manager
 ```
 *注：8080 为面板访问端口，8000-8100 为转发预留端口。*
 
