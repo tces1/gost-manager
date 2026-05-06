@@ -1,5 +1,7 @@
+# syntax=docker/dockerfile:1.7
+
 # --- Stage 1: Build Frontend ---
-FROM node:20-alpine AS frontend-builder
+FROM --platform=$BUILDPLATFORM node:20-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm install
@@ -7,10 +9,12 @@ COPY frontend/ ./
 RUN npm run build
 
 # --- Stage 2: Build Backend ---
-FROM golang:1.25-alpine AS backend-builder
+FROM --platform=$BUILDPLATFORM golang:1.25-alpine AS backend-builder
 WORKDIR /app
+ARG TARGETOS
+ARG TARGETARCH
 COPY . .
-RUN go build -o gost-manager main.go
+RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH:-amd64} go build -o gost-manager main.go
 
 # --- Stage 3: Final Image ---
 FROM alpine:latest
