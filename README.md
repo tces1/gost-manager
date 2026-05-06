@@ -47,12 +47,25 @@ docker run -d \
 
 ### 本地构建 (Manual Build)
 
-如果你想手动编译运行：
+如果你想在当前机器上直接运行，项目现在提供了跨平台本地构建脚本，会自动：
+
+- 编译当前架构的 `gost-manager`
+- 下载当前系统对应的 `gost-engine`
+- 构建前端静态资源
+
+```bash
+./scripts/build-local.sh
+./gost-manager
+```
+
+访问 `http://localhost:8081`，初始密码为 `admin`。
+
+如果你想手动拆开执行：
 
 1. **构建前端**：
    ```bash
    cd frontend
-   npm install
+   npm ci
    npm run build
    ```
 
@@ -62,7 +75,12 @@ docker run -d \
    go build -o gost-manager main.go
    ```
 
-3. **启动**：
+3. **下载当前平台的 GOST 引擎**：
+   ```bash
+   ./scripts/install-gost-engine.sh
+   ```
+
+4. **启动**：
    ```bash
    ./gost-manager
    ```

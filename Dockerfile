@@ -15,21 +15,17 @@ RUN go build -o gost-manager main.go
 # --- Stage 3: Final Image ---
 FROM alpine:latest
 WORKDIR /app
+ARG GOST_VERSION=3.0.0-rc10
+ARG TARGETOS
+ARG TARGETARCH
 
 # Install dependencies (curl for healthcheck/debugging)
 RUN apk add --no-cache curl ca-certificates
 
-# Download GOST engine (v3)
-RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then GOST_ARCH="amd64"; \
-    elif [ "$ARCH" = "aarch64" ]; then GOST_ARCH="arm64"; \
-    else GOST_ARCH="amd64"; fi && \
-    curl -LO https://github.com/go-gost/gost/releases/download/v3.0.0-rc10/gost_3.0.0-rc10_linux_${GOST_ARCH}.tar.gz && \
-    mkdir -p tmp_gost && \
-    tar -zxvf gost_3.0.0-rc10_linux_${GOST_ARCH}.tar.gz -C tmp_gost && \
-    mv tmp_gost/gost ./gost-engine && \
-    chmod +x gost-engine && \
-    rm -rf tmp_gost gost_3.0.0-rc10_linux_${GOST_ARCH}.tar.gz
+COPY scripts ./scripts
+RUN chmod +x ./scripts/*.sh && \
+    TARGETOS=${TARGETOS:-linux} TARGETARCH=${TARGETARCH:-amd64} ./scripts/install-gost-engine.sh "$GOST_VERSION" /app/gost-engine && \
+    rm -rf ./scripts
 
 # Copy built assets from previous stages
 COPY --from=backend-builder /app/gost-manager ./
