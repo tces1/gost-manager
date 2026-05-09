@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { 
-  Terminal, 
-  Plus, 
-  Trash2, 
-  Shield, 
-  Activity, 
-  Cpu, 
-  Zap, 
+import {
+  Terminal,
+  Plus,
+  Trash2,
+  Shield,
+  Activity,
+  Cpu,
+  Zap,
   RefreshCw,
   LogOut,
   Settings as SettingsIcon,
@@ -17,10 +17,174 @@ import {
   ChevronRight,
   Lock,
   KeyRound,
-  CheckCircle2
+  CheckCircle2,
+  Languages
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+
+// ─── i18n ────────────────────────────────────────────────────────────────────
+type Lang = 'en' | 'zh';
+
+const translations = {
+  en: {
+    // login
+    loginSubtitle: 'Control Center Login',
+    loginPlaceholder: 'ACCESS KEY',
+    loginBtn: 'Enter Dashboard',
+    loginFailed: 'Authentication failed.',
+    // nav
+    navOverview: 'Overview',
+    navForwarding: 'Forwarding',
+    navLogs: 'Logs',
+    navSettings: 'Settings',
+    // sidebar
+    engineStatus: 'Engine Status',
+    nodeCluster: 'Node Cluster',
+    operational: 'Operational',
+    logout: 'Logout Session',
+    // overview stats
+    activeRules: 'Active Rules',
+    cpuUsage: 'CPU Usage',
+    syncStatus: 'Sync Status',
+    engineCore: 'Engine Core',
+    processing: 'PROCESSING',
+    stable: 'STABLE',
+    // overview table
+    quickRules: 'Quick Rules',
+    quickRulesDesc: 'High-priority proxy channels.',
+    createRule: '+ Create Rule',
+    colLabel: 'Label',
+    colMode: 'Mode',
+    colInbound: 'Inbound',
+    colDestination: 'Destination',
+    colCmd: '_cmd',
+    unnamed: 'Unnamed',
+    emptyRegistry: 'The registry is empty',
+    // console
+    fluxConsolePreview: 'Flux Console Preview',
+    live: 'LIVE',
+    // forwarding
+    forwardingRegistry: 'Forwarding Registry',
+    addEntry: '+ Add Entry',
+    colRuleIdentity: 'Rule Identity',
+    colInboundPort: 'Inbound Port',
+    colDestinationTarget: 'Destination Target',
+    colStatus: 'Status',
+    operationalStatus: 'OPERATIONAL',
+    noActiveMappings: 'No active mappings',
+    // logs
+    fluxTerminal: 'Flux Terminal',
+    synchronizedStream: 'Synchronized Stream',
+    waitingForFlux: '_ WAITING_FOR_FLUX',
+    // settings
+    systemSettings: 'System Settings',
+    systemSettingsDesc: 'Control node configuration and security.',
+    securityCredentials: 'Security Credentials',
+    currentMasterKey: 'Current Master Key',
+    newKey: 'New Key',
+    confirmNewKey: 'Confirm New Key',
+    saving: 'Encrypting...',
+    saved: 'Cipher Updated',
+    saveKey: 'Rewrite Master Key',
+    clusterMetadata: 'Cluster Metadata',
+    environment: 'Environment',
+    engineVersion: 'Engine Version',
+    passwordMismatch: 'New passwords do not match.',
+    passwordFailed: 'Failed to update password.',
+    // modal
+    addForwardingRule: 'Add Forwarding Rule',
+    ruleName: 'Rule Name',
+    ruleNamePlaceholder: 'e.g., MySQL Proxy',
+    protocol: 'Protocol',
+    localPort: 'Local Port',
+    portPlaceholder: 'Port',
+    remoteAddress: 'Remote Address',
+    saveRule: 'Save Rule',
+    fillAllFields: 'Please fill in all required fields.',
+    createFailed: 'Failed to create rule.',
+    deleteFailed: 'Failed to delete rule.',
+  },
+  zh: {
+    // login
+    loginSubtitle: '控制中心登录',
+    loginPlaceholder: '访问密钥',
+    loginBtn: '进入控制台',
+    loginFailed: '认证失败，请检查密码。',
+    // nav
+    navOverview: '概览',
+    navForwarding: '转发规则',
+    navLogs: '日志',
+    navSettings: '设置',
+    // sidebar
+    engineStatus: '引擎状态',
+    nodeCluster: '节点集群',
+    operational: '运行中',
+    logout: '退出登录',
+    // overview stats
+    activeRules: '活跃规则',
+    cpuUsage: 'CPU 使用率',
+    syncStatus: '同步状态',
+    engineCore: '引擎版本',
+    processing: '同步中',
+    stable: '正常',
+    // overview table
+    quickRules: '快速规则',
+    quickRulesDesc: '高优先级代理通道。',
+    createRule: '+ 新建规则',
+    colLabel: '名称',
+    colMode: '模式',
+    colInbound: '本地端口',
+    colDestination: '目标地址',
+    colCmd: '操作',
+    unnamed: '未命名',
+    emptyRegistry: '暂无规则',
+    // console
+    fluxConsolePreview: '实时日志预览',
+    live: '直播',
+    // forwarding
+    forwardingRegistry: '转发规则列表',
+    addEntry: '+ 添加规则',
+    colRuleIdentity: '规则名称',
+    colInboundPort: '本地端口',
+    colDestinationTarget: '目标地址',
+    colStatus: '状态',
+    operationalStatus: '运行中',
+    noActiveMappings: '暂无转发规则',
+    // logs
+    fluxTerminal: '实时终端',
+    synchronizedStream: '实时同步',
+    waitingForFlux: '_ 等待日志流...',
+    // settings
+    systemSettings: '系统设置',
+    systemSettingsDesc: '配置节点安全与运行参数。',
+    securityCredentials: '安全凭证',
+    currentMasterKey: '当前密码',
+    newKey: '新密码',
+    confirmNewKey: '确认新密码',
+    saving: '加密中...',
+    saved: '密码已更新',
+    saveKey: '修改密码',
+    clusterMetadata: '集群信息',
+    environment: '运行环境',
+    engineVersion: '引擎版本',
+    passwordMismatch: '两次输入的新密码不一致。',
+    passwordFailed: '密码修改失败。',
+    // modal
+    addForwardingRule: '添加转发规则',
+    ruleName: '规则名称',
+    ruleNamePlaceholder: '例如：MySQL 代理',
+    protocol: '协议',
+    localPort: '本地端口',
+    portPlaceholder: '端口号',
+    remoteAddress: '远端地址',
+    saveRule: '保存规则',
+    fillAllFields: '请填写所有必填项。',
+    createFailed: '创建规则失败。',
+    deleteFailed: '删除规则失败。',
+  },
+} as const;
+// ─────────────────────────────────────────────────────────────────────────────
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,6 +201,14 @@ interface Rule {
 const API_BASE = window.location.origin;
 
 export default function App() {
+  const [lang, setLang] = useState<Lang>(() => (localStorage.getItem('gost_lang') as Lang) || 'en');
+  const t = translations[lang];
+  const toggleLang = () => {
+    const next: Lang = lang === 'en' ? 'zh' : 'en';
+    setLang(next);
+    localStorage.setItem('gost_lang', next);
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   const [rules, setRules] = useState<Rule[]>([]);
@@ -103,12 +275,12 @@ export default function App() {
       await axios.post(`${API_BASE}/api/login`, { password });
       localStorage.setItem('gost_token', 'dummy-token');
       setIsLoggedIn(true);
-    } catch (e) { alert('Authentication failed.'); }
+    } catch (e) { alert(t.loginFailed); }
   };
 
   const addRule = async () => {
     if (!newRule.name || !newRule.local_port || !newRule.remote_addr) {
-      alert('Please fill in all required fields.');
+      alert(t.fillAllFields);
       return;
     }
     setStatus('SYNCING');
@@ -118,8 +290,8 @@ export default function App() {
       setIsModalOpen(false);
       fetchRules();
       setTimeout(() => setStatus('IDLE'), 1000);
-    } catch (e) { 
-      alert('Failed to create rule.');
+    } catch (e) {
+      alert(t.createFailed);
       setStatus('IDLE');
     }
   };
@@ -130,8 +302,8 @@ export default function App() {
       await axios.delete(`${API_BASE}/api/rules/${id}`);
       fetchRules();
       setTimeout(() => setStatus('IDLE'), 1000);
-    } catch (e) { 
-      alert('Failed to delete rule.');
+    } catch (e) {
+      alert(t.deleteFailed);
       setStatus('IDLE');
     }
   };
@@ -139,7 +311,7 @@ export default function App() {
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (passForm.new !== passForm.confirm) {
-      alert('New passwords do not match.');
+      alert(t.passwordMismatch);
       return;
     }
     setPassStatus('SAVING');
@@ -152,7 +324,7 @@ export default function App() {
       setPassForm({ old: '', new: '', confirm: '' });
       setTimeout(() => setPassStatus('IDLE'), 3000);
     } catch (e: any) {
-      alert(e.response?.data?.error || 'Failed to update password.');
+      alert(e.response?.data?.error || t.passwordFailed);
       setPassStatus('ERROR');
       setTimeout(() => setPassStatus('IDLE'), 3000);
     }
@@ -162,6 +334,14 @@ export default function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#030712] relative overflow-hidden font-sans text-sm text-slate-300">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand/10 blur-[100px] rounded-full pointer-events-none" />
+        {/* Language toggle */}
+        <button
+          onClick={toggleLang}
+          className="absolute top-6 right-6 flex items-center space-x-1.5 text-slate-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors"
+        >
+          <Languages className="w-3.5 h-3.5" />
+          <span>{lang === 'en' ? '中文' : 'EN'}</span>
+        </button>
         <form onSubmit={handleLogin} className="w-full max-w-xs glass-card rounded-[2rem] p-10 space-y-8 relative z-10 border-white/5 shadow-2xl">
           <div className="flex flex-col items-center space-y-5 text-center">
             <div className="w-16 h-16 bg-gradient-to-tr from-brand to-pink-500 rounded-2xl flex items-center justify-center shadow-xl shadow-brand/20">
@@ -169,18 +349,18 @@ export default function App() {
             </div>
             <div>
               <h1 className="text-xl font-bold tracking-tight text-white italic">GOST Manager</h1>
-              <p className="text-slate-500 text-[10px] mt-2 tracking-widest uppercase font-bold opacity-60">Control Center Login</p>
+              <p className="text-slate-500 text-[10px] mt-2 tracking-widest uppercase font-bold opacity-60">{t.loginSubtitle}</p>
             </div>
           </div>
           <input
             type="password"
-            placeholder="ACCESS KEY"
+            placeholder={t.loginPlaceholder}
             className="w-full glass-input p-3 text-center text-white outline-none placeholder:text-slate-700"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="w-full bg-white text-black font-bold py-3.5 rounded-xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl text-xs uppercase tracking-widest">
-            Enter Dashboard
+            {t.loginBtn}
           </button>
         </form>
       </div>
@@ -204,45 +384,53 @@ export default function App() {
               <span className="font-bold text-[10px] tracking-[0.3em] text-brand uppercase opacity-80 mt-1">Manager</span>
             </div>
           </div>
-          
+
           <nav className="space-y-1.5">
             {[
-              { label: 'Overview', icon: LayoutDashboard },
-              { label: 'Forwarding', icon: Activity },
-              { label: 'Logs', icon: TerminalSquare },
-              { label: 'Settings', icon: SettingsIcon },
+              { key: 'Overview', label: t.navOverview, icon: LayoutDashboard },
+              { key: 'Forwarding', label: t.navForwarding, icon: Activity },
+              { key: 'Logs', label: t.navLogs, icon: TerminalSquare },
+              { key: 'Settings', label: t.navSettings, icon: SettingsIcon },
             ].map((item) => (
               <button
-                key={item.label}
-                onClick={() => setCurrentTab(item.label)}
+                key={item.key}
+                onClick={() => setCurrentTab(item.key)}
                 className={cn(
                   "w-full flex items-center space-x-4 px-4 py-3 rounded-xl text-xs font-semibold transition-all duration-300",
-                  currentTab === item.label 
-                    ? "bg-white/10 text-white border border-white/10 shadow-xl" 
+                  currentTab === item.key
+                    ? "bg-white/10 text-white border border-white/10 shadow-xl"
                     : "text-slate-500 hover:text-slate-200 hover:bg-white/5"
                 )}
               >
-                <item.icon className={cn("w-4 h-4", currentTab === item.label ? "text-brand" : "")} />
+                <item.icon className={cn("w-4 h-4", currentTab === item.key ? "text-brand" : "")} />
                 <span>{item.label}</span>
               </button>
             ))}
           </nav>
         </div>
-        
+
         <div className="space-y-6">
           <div className="p-5 rounded-2xl bg-brand/5 border border-brand/10">
-             <div className="text-[9px] font-black text-brand uppercase tracking-[0.2em] mb-1.5 opacity-60">Engine Status</div>
+             <div className="text-[9px] font-black text-brand uppercase tracking-[0.2em] mb-1.5 opacity-60">{t.engineStatus}</div>
              <div className="flex items-center justify-between">
-                <span className="text-[10px] text-slate-400">Node Cluster</span>
-                <span className="text-[10px] font-bold text-green-400 uppercase tracking-tighter animate-pulse">Operational</span>
+                <span className="text-[10px] text-slate-400">{t.nodeCluster}</span>
+                <span className="text-[10px] font-bold text-green-400 uppercase tracking-tighter animate-pulse">{t.operational}</span>
              </div>
           </div>
-          <button 
+          {/* Language toggle */}
+          <button
+            onClick={toggleLang}
+            className="w-full text-slate-600 hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center justify-center space-x-3 group"
+          >
+            <Languages className="w-3 h-3 group-hover:scale-110 transition-transform" />
+            <span>{lang === 'en' ? '切换中文' : 'Switch to EN'}</span>
+          </button>
+          <button
             onClick={() => { localStorage.removeItem('gost_token'); setIsLoggedIn(false); }}
             className="w-full text-slate-600 hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center justify-center space-x-3 group"
           >
             <LogOut className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-            <span>Logout Session</span>
+            <span>{t.logout}</span>
           </button>
         </div>
       </aside>
@@ -252,17 +440,22 @@ export default function App() {
         <div className="shrink-0 flex items-center space-x-2 text-slate-500 text-[10px] uppercase font-bold tracking-[0.2em] mb-2 px-2">
            <LayoutDashboard className="w-3 h-3 text-brand/50" />
            <ChevronRight className="w-3 h-3 opacity-30" />
-           <span className="text-white tracking-[0.3em]">{currentTab}</span>
+           <span className="text-white tracking-[0.3em]">
+             {currentTab === 'Overview' ? t.navOverview
+               : currentTab === 'Forwarding' ? t.navForwarding
+               : currentTab === 'Logs' ? t.navLogs
+               : t.navSettings}
+           </span>
         </div>
 
         {currentTab === 'Overview' && (
           <div className="flex-grow space-y-6 overflow-y-auto pr-2 custom-scroll">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: 'Active Rules', val: rules.length, icon: Activity },
-                { label: 'CPU Usage', val: sysInfo.cpu_usage, icon: Cpu },
-                { label: 'Sync Status', val: status === 'SYNCING' ? 'PROCESSING' : 'STABLE', icon: RefreshCw },
-                { label: 'Engine Core', val: sysInfo.version, icon: Zap },
+                { label: t.activeRules, val: rules.length, icon: Activity },
+                { label: t.cpuUsage, val: sysInfo.cpu_usage, icon: Cpu },
+                { label: t.syncStatus, val: status === 'SYNCING' ? t.processing : t.stable, icon: RefreshCw },
+                { label: t.engineCore, val: sysInfo.version, icon: Zap },
               ].map((s, i) => (
                 <div key={i} className="glass-card rounded-[1.5rem] p-5 border-white/5 group hover:border-brand/20 transition-all shadow-xl">
                   <div className="flex items-center space-x-3 text-slate-500 mb-1.5">
@@ -277,14 +470,14 @@ export default function App() {
             <div className="glass-card rounded-[2rem] overflow-hidden flex flex-col min-h-[400px] border-white/5 shadow-inner bg-white/[0.01]">
               <div className="p-8 flex justify-between items-center shrink-0 border-b border-white/5">
                 <div>
-                  <h2 className="text-xl font-bold text-white tracking-tight italic">Quick Rules</h2>
-                  <p className="text-slate-500 text-[10px] mt-1 opacity-60">High-priority proxy channels.</p>
+                  <h2 className="text-xl font-bold text-white tracking-tight italic">{t.quickRules}</h2>
+                  <p className="text-slate-500 text-[10px] mt-1 opacity-60">{t.quickRulesDesc}</p>
                 </div>
-                <button 
+                <button
                   onClick={() => setIsModalOpen(true)}
                   className="bg-white text-black px-6 py-2.5 rounded-xl text-[11px] font-black hover:scale-[1.03] active:scale-[0.97] transition-all shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
                 >
-                  + Create Rule
+                  {t.createRule}
                 </button>
               </div>
 
@@ -292,17 +485,17 @@ export default function App() {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="text-slate-600 text-[9px] font-black uppercase tracking-[0.2em]">
-                      <th className="px-8 py-5">Label</th>
-                      <th className="px-8 py-5">Mode</th>
-                      <th className="px-8 py-5">Inbound</th>
-                      <th className="px-8 py-5">Destination</th>
-                      <th className="px-8 py-5 text-right">_cmd</th>
+                      <th className="px-8 py-5">{t.colLabel}</th>
+                      <th className="px-8 py-5">{t.colMode}</th>
+                      <th className="px-8 py-5">{t.colInbound}</th>
+                      <th className="px-8 py-5">{t.colDestination}</th>
+                      <th className="px-8 py-5 text-right">{t.colCmd}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/[0.03]">
                     {rules.slice(0, 5).map((rule) => (
                       <tr key={rule.id} className="group hover:bg-white/[0.01] transition-all duration-300">
-                        <td className="px-8 py-5 font-bold text-white tracking-tight">{rule.name || 'Unnamed'}</td>
+                        <td className="px-8 py-5 font-bold text-white tracking-tight">{rule.name || t.unnamed}</td>
                         <td className="px-8 py-5">
                           <span className="text-[8px] font-black px-2 py-0.5 rounded-lg bg-brand/10 text-brand border border-brand/20 tracking-widest uppercase">
                             {rule.protocol}
@@ -323,7 +516,7 @@ export default function App() {
                   </tbody>
                 </table>
                 {rules.length === 0 && (
-                  <div className="py-24 text-center text-slate-600 italic text-sm opacity-40 uppercase tracking-widest">The registry is empty</div>
+                  <div className="py-24 text-center text-slate-600 italic text-sm opacity-40 uppercase tracking-widest">{t.emptyRegistry}</div>
                 )}
               </div>
             </div>
@@ -332,11 +525,11 @@ export default function App() {
               <div className="flex items-center justify-between px-2 text-slate-500">
                 <div className="flex items-center space-x-3 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
                   <Terminal className="w-4 h-4 text-brand" />
-                  <span>Flux Console Preview</span>
+                  <span>{t.fluxConsolePreview}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                    <div className="w-1 h-1 bg-green-500 rounded-full animate-pulse" />
-                   <span className="text-[9px] font-black text-green-600">LIVE</span>
+                   <span className="text-[9px] font-black text-green-600">{t.live}</span>
                 </div>
               </div>
               <div ref={scrollRef} className="h-32 overflow-y-auto font-mono text-[9px] leading-relaxed text-slate-500 space-y-1.5 px-2 custom-scroll">
@@ -355,23 +548,23 @@ export default function App() {
         {currentTab === 'Forwarding' && (
           <div className="flex-grow flex flex-col glass-card rounded-[2.5rem] overflow-hidden border-white/5 shadow-2xl bg-white/[0.01]">
             <div className="p-8 border-b border-white/5 flex justify-between items-center shrink-0">
-               <h2 className="text-xl font-bold text-white italic tracking-tight uppercase">Forwarding Registry</h2>
+               <h2 className="text-xl font-bold text-white italic tracking-tight uppercase">{t.forwardingRegistry}</h2>
                <button 
                   onClick={() => setIsModalOpen(true)}
                   className="bg-brand text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.03] transition-all shadow-xl"
                 >
-                  + Add Entry
+                  {t.addEntry}
                 </button>
             </div>
             <div className="flex-grow overflow-y-auto px-6 py-4 custom-scroll">
                <table className="w-full text-left text-xs">
                   <thead>
                     <tr className="text-slate-600 text-[9px] font-black uppercase tracking-[0.2em] border-b border-white/5">
-                      <th className="px-6 py-4">Rule Identity</th>
+                      <th className="px-6 py-4">{t.colRuleIdentity}</th>
                       <th className="px-6 py-4 text-center">Mode</th>
-                      <th className="px-6 py-4">Inbound Port</th>
-                      <th className="px-6 py-4">Destination Target</th>
-                      <th className="px-6 py-4 text-right">Status</th>
+                      <th className="px-6 py-4">{t.colInboundPort}</th>
+                      <th className="px-6 py-4">{t.colDestinationTarget}</th>
+                      <th className="px-6 py-4 text-right">{t.colStatus}</th>
                       <th className="px-6 py-4"></th>
                     </tr>
                   </thead>
@@ -387,7 +580,7 @@ export default function App() {
                         <td className="px-6 py-5 text-right text-[9px] font-bold text-slate-400">
                            <div className="flex items-center justify-end space-x-2">
                               <div className="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.4)]" />
-                              <span>OPERATIONAL</span>
+                              <span>{t.operationalStatus}</span>
                            </div>
                         </td>
                         <td className="px-6 py-5 text-right">
@@ -397,7 +590,7 @@ export default function App() {
                     ))}
                   </tbody>
                </table>
-               {rules.length === 0 && <div className="py-32 text-center text-slate-600 italic uppercase tracking-widest opacity-30">No active mappings</div>}
+               {rules.length === 0 && <div className="py-32 text-center text-slate-600 italic uppercase tracking-widest opacity-30">{t.noActiveMappings}</div>}
             </div>
           </div>
         )}
@@ -407,11 +600,11 @@ export default function App() {
              <div className="p-8 border-b border-white/5 flex justify-between items-center shrink-0">
                 <div className="flex items-center space-x-4">
                    <TerminalSquare className="w-6 h-6 text-brand" />
-                   <h2 className="text-xl font-bold text-white italic tracking-tight uppercase">Flux Terminal</h2>
+                   <h2 className="text-xl font-bold text-white italic tracking-tight uppercase">{t.fluxTerminal}</h2>
                 </div>
                 <div className="flex items-center space-x-2 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
                    <div className="w-1 h-1 bg-green-500 rounded-full animate-pulse" />
-                   <span className="text-[8px] font-black text-green-500 uppercase tracking-[0.2em]">Synchronized Stream</span>
+                   <span className="text-[8px] font-black text-green-500 uppercase tracking-[0.2em]">{t.synchronizedStream}</span>
                 </div>
              </div>
              <div ref={scrollRef} className="flex-grow overflow-y-auto p-10 font-mono text-[10px] leading-relaxed text-slate-400 space-y-1.5 custom-scroll bg-black/20">
@@ -422,7 +615,7 @@ export default function App() {
                     <span className="group-hover:text-slate-200 transition-colors">{log}</span>
                   </div>
                 ))}
-                <div className="animate-pulse text-brand pt-4 font-black tracking-widest">_ WAITING_FOR_FLUX</div>
+                <div className="animate-pulse text-brand pt-4 font-black tracking-widest">{t.waitingForFlux}</div>
              </div>
           </div>
         )}
@@ -430,8 +623,8 @@ export default function App() {
         {currentTab === 'Settings' && (
           <div className="flex-grow glass-card rounded-[3rem] p-12 space-y-12 border-white/5 shadow-2xl overflow-y-auto custom-scroll bg-white/[0.01]">
              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-white italic tracking-tight uppercase">System Settings</h2>
-                <p className="text-slate-500 text-[10px] tracking-widest font-bold opacity-60">Control node configuration and security.</p>
+                <h2 className="text-2xl font-bold text-white italic tracking-tight uppercase">{t.systemSettings}</h2>
+                <p className="text-slate-500 text-[10px] tracking-widest font-bold opacity-60">{t.systemSettingsDesc}</p>
              </div>
              
              <div className="max-w-xl space-y-8">
@@ -443,12 +636,12 @@ export default function App() {
                          <div className="w-10 h-10 bg-brand/10 rounded-xl flex items-center justify-center">
                             <Lock className="w-5 h-5 text-brand" />
                          </div>
-                         <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em]">Security Credentials</h3>
+                         <h3 className="text-sm font-bold text-white uppercase tracking-[0.2em]">{t.securityCredentials}</h3>
                       </div>
 
                       <div className="space-y-4">
                          <div className="space-y-2">
-                            <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">Current Master Key</label>
+                            <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">{t.currentMasterKey}</label>
                             <input 
                                type="password" 
                                className="w-full glass-input p-3.5 text-white outline-none"
@@ -459,7 +652,7 @@ export default function App() {
                          </div>
                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                               <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">New Key</label>
+                               <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">{t.newKey}</label>
                                <input 
                                   type="password" 
                                   className="w-full glass-input p-3.5 text-white outline-none"
@@ -469,7 +662,7 @@ export default function App() {
                                />
                             </div>
                             <div className="space-y-2">
-                               <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">Confirm New Key</label>
+                               <label className="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-4">{t.confirmNewKey}</label>
                                <input 
                                   type="password" 
                                   className="w-full glass-input p-3.5 text-white outline-none"
@@ -494,7 +687,7 @@ export default function App() {
                          {passStatus === 'SAVING' ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : 
                           passStatus === 'SUCCESS' ? <CheckCircle2 className="w-3.5 h-3.5" /> :
                           <KeyRound className="w-3.5 h-3.5" />}
-                         <span>{passStatus === 'SAVING' ? 'Encrypting...' : passStatus === 'SUCCESS' ? 'Cipher Updated' : 'Rewrite Master Key'}</span>
+                         <span>{passStatus === 'SAVING' ? t.saving : passStatus === 'SUCCESS' ? t.saved : t.saveKey}</span>
                       </button>
                    </div>
                 </form>
@@ -503,15 +696,15 @@ export default function App() {
                 <div className="p-8 rounded-[2rem] bg-brand/5 border border-brand/10 space-y-4 shadow-xl">
                    <h3 className="text-[10px] font-black text-brand uppercase tracking-widest flex items-center space-x-3">
                       <Zap className="w-3.5 h-3.5" />
-                      <span>Cluster Metadata</span>
+                      <span>{t.clusterMetadata}</span>
                    </h3>
                    <div className="grid grid-cols-2 gap-4 text-[10px] font-bold">
                       <div className="space-y-1">
-                         <div className="text-slate-600 uppercase tracking-tighter">Environment</div>
+                         <div className="text-slate-600 uppercase tracking-tighter">{t.environment}</div>
                          <div className="text-white">DOCKER_V3_ALPINE</div>
                       </div>
                       <div className="space-y-1">
-                         <div className="text-slate-600 uppercase tracking-tighter">Engine Version</div>
+                         <div className="text-slate-600 uppercase tracking-tighter">{t.engineVersion}</div>
                          <div className="text-white">{sysInfo.version}</div>
                       </div>
                    </div>
@@ -526,16 +719,16 @@ export default function App() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/70 backdrop-blur-xl animate-in fade-in duration-500">
           <div className="w-full max-w-md glass-card rounded-[2.5rem] p-12 space-y-10 animate-in zoom-in-95 duration-500 shadow-[0_0_100px_rgba(167,139,250,0.15)] border-white/5">
              <div className="flex justify-between items-center border-b border-white/5 pb-6">
-                <h3 className="text-xl font-bold text-white italic">Add Forwarding Rule</h3>
+                <h3 className="text-xl font-bold text-white italic">{t.addForwardingRule}</h3>
                 <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white p-1 hover:bg-white/5 rounded-full transition-all">
                   <Plus className="w-6 h-6 rotate-45" />
                 </button>
              </div>
              <div className="space-y-6">
                 <div className="space-y-2">
-                   <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">Rule Name</label>
+                   <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">{t.ruleName}</label>
                    <input
-                    placeholder="e.g., MySQL Proxy"
+                    placeholder={t.ruleNamePlaceholder}
                     className="w-full glass-input p-3.5 text-white text-sm font-medium"
                     value={newRule.name}
                     onChange={(e) => setNewRule({ ...newRule, name: e.target.value })}
@@ -543,7 +736,7 @@ export default function App() {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">Protocol</label>
+                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">{t.protocol}</label>
                     <select
                       className="w-full glass-input p-3.5 text-white text-xs appearance-none cursor-pointer"
                       value={newRule.protocol}
@@ -554,10 +747,10 @@ export default function App() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">Local Port</label>
+                    <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">{t.localPort}</label>
                     <input
                       type="number"
-                      placeholder="Port"
+                      placeholder={t.portPlaceholder}
                       className="w-full glass-input p-3.5 text-white font-mono text-sm"
                       value={newRule.local_port || ''}
                       onChange={(e) => setNewRule({ ...newRule, local_port: parseInt(e.target.value) })}
@@ -565,7 +758,7 @@ export default function App() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                   <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">Remote Address</label>
+                   <label className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-4">{t.remoteAddress}</label>
                    <input
                     placeholder="host:port"
                     className="w-full glass-input p-3.5 text-white font-mono text-sm"
@@ -578,7 +771,7 @@ export default function App() {
               onClick={addRule}
               className="w-full bg-white text-black font-black py-4 rounded-xl hover:bg-brand hover:text-white transition-all shadow-2xl hover:shadow-brand/20 active:scale-95 text-xs uppercase tracking-widest"
              >
-              Save Rule
+              {t.saveRule}
              </button>
           </div>
         </div>
